@@ -2,8 +2,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-    "build": "vite build && npm run tailwind-build",
-    "tailwind-build": "npx tailwindcss -o public/build/tailwind.css"
+        "build": "vite build && npm run tailwind-build",
+        "tailwind-build": "npx tailwindcss -o public/build/tailwind.css"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.2",
