@@ -12,6 +12,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <!-- Scripts -->
+        <link rel="stylesheet" href="https://zynco.vercel.app/build/assets/app-Cud2RjYC.css">
+        <script src="https://zynco.vercel.app/build/assets/app-BeS5ypqt.js"></script>
         @vite(['resources/js/app.js', 'resources/css/app.css'])
 
     </head>
