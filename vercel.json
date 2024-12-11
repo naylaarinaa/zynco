@@ -10,10 +10,10 @@
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "public": true,
-    "buildCommand": "npm install && npm install axios && npm run build && vite build",
+    "buildCommand": "npm install && npm install axios && npm run dev",
     "outputDirectory": "public",
     "env": {
-        "APP_ENV": "production",
+        "APP_ENV": "development",
         "APP_DEBUG": "true",
         "APP_URL": "https://zynco.vercel.app/",
         "APP_KEY": "base64:wnl0nFBsexedu4FRIB75ThqFXgByXgPeujQL6G5gbZQ=",
