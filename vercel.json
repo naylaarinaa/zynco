@@ -31,7 +31,7 @@
         "DB_PORT": "3306",
         "DB_DATABASE": "zyncodb_cornermake",
         "DB_USERNAME": "zyncodb_cornermake",
-        "DB_PASSWORD": "zyncodb_cornermake"
+        "DB_PASSWORD": "692cfb9bcc81d44c14a666d0b6a3501bf5fd7e6f"
     }
 
 }
