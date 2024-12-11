@@ -12,8 +12,8 @@
     "buildCommand": "vite build",
     "outputDirectory": "public",
     "env": {
-        "APP_ENV": "production",
-        "APP_DEBUG": "false",
+        "APP_ENV": "development",
+        "APP_DEBUG": "true",
         "APP_URL": "https://zyncoecommerce.vercel.app/",
         "APP_KEY": "base64:wnl0nFBsexedu4FRIB75ThqFXgByXgPeujQL6G5gbZQ=",
         "APP_CONFIG_CACHE": "/tmp/config.php",
