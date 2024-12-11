@@ -10,7 +10,7 @@
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "public": true,
-    "buildCommand": "npm install && npm run build",
+    "buildCommand": "npm install && vite build && npm run build",
     "outputDirectory": "public",
     "env": {
         "APP_ENV": "development",
