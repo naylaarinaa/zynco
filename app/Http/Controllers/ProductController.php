@@ -147,10 +147,14 @@ public function addToCart(Request $request, $id)
 
     $cart = session()->get('cart', []);
 
-    // Ambil data gambar dari kolom BLOB `image_url` dan konversi ke base64
+    // Ambil data gambar dan konversi ke Base64 jika ada
     $imageUrl = null;
-    if ($product->image_url) {
-        $imageUrl = 'data:image/jpeg;base64,' . base64_encode($product->image_url);
+    if ($product->image) {
+        $imagePath = public_path('images/' . $product->image); // Sesuaikan path gambar
+        if (file_exists($imagePath)) {
+            $imageData = file_get_contents($imagePath);
+            $imageUrl = 'data:image/jpeg;base64,' . base64_encode($imageData);
+        }
     }
 
     // Tambahkan produk ke keranjang
@@ -161,7 +165,7 @@ public function addToCart(Request $request, $id)
             'name' => $product->name,
             'quantity' => $request->input('quantity', 1),
             'price' => $product->price,
-            'image_url' => $imageUrl, // Masukkan Base64 image
+            'image_url' => $imageUrl, // Masukkan Base64 image atau null jika tidak ada
         ];
     }
 
@@ -169,7 +173,8 @@ public function addToCart(Request $request, $id)
     return redirect()->route('shop.index')->with('success', 'Product added to cart successfully!');
 }
 
- 
+
+    
 
     // Remove product from cart
     public function removeFromCart($id)
