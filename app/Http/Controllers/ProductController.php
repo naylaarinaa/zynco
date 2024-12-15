@@ -30,6 +30,11 @@ class ProductController extends Controller
 
         // Get the results
         $products = $products->get();
+        foreach ($products as $product) {
+            if ($product->image_url) {
+                $product->image_url = 'data:image/jpeg;base64,' . base64_encode($product->image_url);
+            }
+        }
 
         return view('products.index', compact('products', 'query', 'category'));
     }
@@ -72,6 +77,12 @@ class ProductController extends Controller
     {
         // Retrieve all products for editing
         $products = Product::all();
+        foreach ($products as $product) {
+            if ($product->image_url) {
+                $product->image_url = 'data:image/jpeg;base64,' . base64_encode($product->image_url);
+            }
+        }
+        
         return view('products.edit', compact('products')); // Show edit view with existing products
     }
 
@@ -120,36 +131,45 @@ class ProductController extends Controller
     // Display the cart page
     public function cart()
     {
-        $cart = session()->get('cart', []); // Retrieve cart data from session
-        return view('products.cart', compact('cart')); // Show cart view with cart data
+        $cart = session()->get('cart', []); // Ambil data keranjang dari sesi
+        return view('products.cart', compact('cart')); // Kirim data keranjang ke tampilan
+    }
+    
+
+    
+public function addToCart(Request $request, $id)
+{
+    $product = Product::find($id);
+
+    if (!$product) {
+        return redirect()->back()->withErrors(['message' => 'Product not found']);
     }
 
-    public function addToCart(Request $request, $id)
-    {
-        $product = Product::find($id);
+    $cart = session()->get('cart', []);
 
-        if (!$product) {
-            return redirect()->back()->withErrors(['message' => 'Product not found']);
-        }
-
-        $cart = session()->get('cart', []); // Retrieve cart from session
-
-        // If product already in cart, increase quantity
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] += $request->input('quantity', 1); // Add quantity
-        } else {
-            // Add new product to cart
-            $cart[$id] = [
-                'name' => $product->name,
-                'quantity' => $request->input('quantity', 1),
-                'price' => $product->price,
-                'image_url' => $product->image_url,
-            ];
-        }
-
-        session()->put('cart', $cart); // Save cart back to session
-        return redirect()->route('shop.index')->with('success', 'Product added to cart successfully!');
+    // Ambil data gambar dari kolom BLOB `image_url` dan konversi ke base64
+    $imageUrl = null;
+    if ($product->image_url) {
+        $imageUrl = 'data:image/jpeg;base64,' . base64_encode($product->image_url);
     }
+
+    // Tambahkan produk ke keranjang
+    if (isset($cart[$id])) {
+        $cart[$id]['quantity'] += $request->input('quantity', 1);
+    } else {
+        $cart[$id] = [
+            'name' => $product->name,
+            'quantity' => $request->input('quantity', 1),
+            'price' => $product->price,
+            'image_url' => $imageUrl, // Masukkan Base64 image
+        ];
+    }
+
+    session()->put('cart', $cart);
+    return redirect()->route('shop.index')->with('success', 'Product added to cart successfully!');
+}
+
+ 
 
     // Remove product from cart
     public function removeFromCart($id)

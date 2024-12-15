@@ -27,11 +27,12 @@
                     <tbody>
                         @foreach ($cart as $id => $item)
                             <tr class="border-b border-gray-300 dark:border-gray-700">
-                                <td class="px-4 py-2 flex items-center dark:text-white">
-                                    <!-- Display product image and name -->
-                                    <img src="{{ filter_var($item['image_url'], FILTER_VALIDATE_URL) ? $item['image_url'] : asset('storage/' . ltrim($item['image_url'], '/')) }}" alt="{{ $item['name'] }}" class="w-12 h-12 object-cover mr-4">
-                                    {{ $item['name'] }}
-                                </td>
+                            <td class="px-4 py-2 flex items-center dark:text-white">
+    <!-- Display product image and name -->
+    <img src="{{ $item['image_url'] }}" alt="{{ $item['name'] }}" class="w-12 h-12 object-cover mr-4">
+    {{ $item['name'] }}
+</td>
+
                                 <td class="px-4 py-2">
                                     <!-- Input for product quantity -->
                                     <input type="number" name="products[{{ $id }}][quantity]" value="{{ $item['quantity'] }}" min="1" class="quantity-input border rounded-lg w-16 text-center" oninput="calculateTotalPrice()">

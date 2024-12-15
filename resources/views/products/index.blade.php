@@ -70,20 +70,21 @@
         <!-- Carousel Container -->
         <div class="swiper-container relative mb-6">
             <div class="swiper-wrapper">
-                @foreach ($products as $product)
-                    <div class="swiper-slide relative flex justify-center"
-                        onclick="openModal('{{ $product->name }}', '{{ asset($product->image_url) }}', '{{ $product->price }}', '{{ $product->category }}', '{{ $product->id }}')">
-                        <!-- Full image background -->
-                        <div class="w-full h-[500px] bg-cover bg-center"
-                            style="background-image: url('{{ asset($product->image_url) }}');">
-                            <!-- Overlay for text at the bottom half -->
-                            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 py-4 flex justify-center">
-                                <!-- Product Name on bottom of the image -->
-                                <h3 class="text-3xl font-bold text-white text-center px-4">{{ $product->name }}</h3>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+            @foreach ($products as $product)
+    <div class="swiper-slide relative flex justify-center"
+        onclick="openModal('{{ $product->name }}', '{{ $product->image_url }}', '{{ $product->price }}', '{{ $product->category }}', '{{ $product->id }}')">
+        <!-- Full image background -->
+        <div class="w-full h-[500px] bg-cover bg-center">
+            <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-full object-cover">
+            <!-- Overlay for text at the bottom half -->
+            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-50 py-4 flex justify-center">
+                <!-- Product Name on bottom of the image -->
+                <h3 class="text-3xl font-bold text-white text-center px-4">{{ $product->name }}</h3>
+            </div>
+        </div>
+    </div>
+@endforeach
+
             </div>
 
             <!-- Pagination -->
@@ -140,9 +141,9 @@
                     <div class="bg-white dark:bg-gray-800 border rounded-lg shadow-lg hover:shadow-2xl hover:scale-105 transition cursor-pointer"
                         onclick="openModal('{{ $item->name }}', '{{ $item->image_url }}', '{{ $item->price }}', '{{ $item->category }}', '{{ $item->id }}')">
                         <div class="product-image w-full h-[200px] overflow-hidden mt-4">
-                            <img src="{{ filter_var($item->image_url, FILTER_VALIDATE_URL) ? $item->image_url : asset('storage/' . ltrim($item->image_url, '/')) }}"
-                                alt="{{ $item->name }}" class="w-full h-full object-contain">
-                        </div>
+    <img src="{{ $item->image_url }}" alt="{{ $item->name }}" class="w-full h-full object-contain">
+</div>
+
                         <div class="p-4 text-center">
                             <h2 class="text-lg font-semibold text-black dark:text-white">{{ $item->name }}</h2>
                             <h3 class="text-sm text-black dark:text-white">{{ $item->category }}</h3>
@@ -188,11 +189,11 @@
         });
     });
 
-    function openModal(name, imageUrl, price, category, productId) {
+    function openModal(name, image_url, price, category, productId) {
         document.getElementById('modalContent').innerHTML = `
             <h2 class="text-2xl font-semibold text-black dark:text-white">${name}</h2>
             <div class="product-image w-[256px] h-[256px] overflow-hidden mx-auto my-4">
-                <img src="${imageUrl}" alt="${name}" class="w-full h-full object-contain">
+                <img src="${image_url}" alt="${name}" class="w-full h-full object-contain">
             </div>
             <h3 class="text-lg font-medium text-black dark:text-white">${category}</h3>
             <h1 class="text-xl font-bold bg-yellow-400 dark:bg-yellow-500 rounded-lg py-2 text-black dark:text-black mb-4">$${price}</h1>

@@ -18,9 +18,10 @@
             <tbody>
                 @foreach ($products as $product)
                 <tr class="bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors">
-                    <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">
-                        <img src="{{ filter_var($product->image_url, FILTER_VALIDATE_URL) ? $product->image_url : asset('storage/' . ltrim($product->image_url, '/')) }}" alt="{{ $product->name }}" class="h-20 w-20 object-cover">
-                    </td>
+                <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">
+    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="h-20 w-20 object-cover">
+</td>
+
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">{{ $product->name }}</td>
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">{{ $product->category }}</td>
                     <td class="px-4 py-2 border-b border-gray-300 dark:border-gray-600">${{ $product->price }}</td>
