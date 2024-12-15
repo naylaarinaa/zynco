@@ -25,25 +25,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cart as $id => $item)
-                            <tr class="border-b border-gray-300 dark:border-gray-700">
-                            <td class="px-4 py-2 flex items-center dark:text-white">
-    <!-- Display product image and name -->
-    <img src="{{ $item['image_url'] }}" alt="{{ $item['name'] }}" class="w-12 h-12 object-cover mr-4">
-    {{ $item['name'] }}
-</td>
+                    @foreach ($cart as $id => $item)
+    <tr class="border-b border-gray-300 dark:border-gray-700">
+        <td class="px-4 py-2 flex items-center dark:text-white">
+            <!-- Display product image and name -->
+            @if (!empty($item['image_url']))
+                <img src="data:image/jpeg;base64,{{ $item['image_url'] }}" alt="{{ $item['name'] }}" class="w-12 h-12 object-cover mr-4">
+            @else
+                <img src="{{ asset('images/default-image.jpg') }}" alt="{{ $item['name'] }}" class="w-12 h-12 object-cover mr-4"> <!-- default image if no image is available -->
+            @endif
+            {{ $item['name'] }}
+        </td>
 
-                                <td class="px-4 py-2">
-                                    <!-- Input for product quantity -->
-                                    <input type="number" name="products[{{ $id }}][quantity]" value="{{ $item['quantity'] }}" min="1" class="quantity-input border rounded-lg w-16 text-center" oninput="calculateTotalPrice()">
-                                </td>
-                                <td class="px-4 py-2 text-gray-800 dark:text-white">${{ number_format($item['price'], 2) }}</td>
-                                <td class="px-4 py-2">
-                                    <!-- Button to remove product from cart -->
-                                    <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onclick="removeFromCart({{ $id }})">Remove</button>
-                                </td>
-                            </tr>
-                        @endforeach
+        <td class="px-4 py-2">
+            <!-- Input for product quantity -->
+            <input type="number" name="products[{{ $id }}][quantity]" value="{{ $item['quantity'] }}" min="1" class="quantity-input border rounded-lg w-16 text-center" oninput="calculateTotalPrice()">
+        </td>
+        <td class="px-4 py-2 text-gray-800 dark:text-white">${{ number_format($item['price'], 2) }}</td>
+        <td class="px-4 py-2">
+            <!-- Button to remove product from cart -->
+            <button type="button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded" onclick="removeFromCart({{ $id }})">Remove</button>
+        </td>
+    </tr>
+@endforeach
+
                     </tbody>
                 </table>
 

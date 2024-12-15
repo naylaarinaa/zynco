@@ -59,14 +59,14 @@ class ProductController extends Controller
             'price' => 'required|numeric|min:0',
         ]);
 
-        // Save image
-        $imagePath = $request->file('image')->store('images', 'public'); // Store image
+        // Save image as blob
+        $imageBlob = file_get_contents($request->file('image')->getRealPath());
 
         // Create a new product
         Product::create([
             'name' => $request->name,
             'category' => $request->category,
-            'image_url' => $imagePath,
+            'image_url' => $imageBlob,
             'price' => $request->price,
         ]);
 
@@ -109,12 +109,10 @@ class ProductController extends Controller
         $product->category = $request->category;
         $product->price = $request->price;
 
-        // If a new image is uploaded, store it and update the image_url
+        // If a new image is uploaded, store it as blob
         if ($request->hasFile('image')) {
-            // Delete old image if it exists
-            Storage::disk('public')->delete($product->image_url);
-            $imagePath = $request->file('image')->store('images', 'public'); // Store the new image
-            $product->image_url = $imagePath;
+            $imageBlob = file_get_contents($request->file('image')->getRealPath());
+            $product->image_url = $imageBlob;
         }
 
         $product->save(); // Save changes
